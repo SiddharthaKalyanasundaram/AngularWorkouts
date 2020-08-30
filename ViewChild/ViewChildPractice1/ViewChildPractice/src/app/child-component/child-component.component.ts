@@ -16,4 +16,5 @@ export class ChildComponentComponent implements OnInit {
     document.getElementById("val").innerText = "Updated."
   }
 
+
 }

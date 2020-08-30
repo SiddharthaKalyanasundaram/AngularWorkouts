@@ -1,6 +1,7 @@
-import { Component, AfterViewInit, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChild, ElementRef, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
 import { SharkDirective } from './shark.directive';
 import { ChildComponentComponent } from './child-component/child-component.component';
+import { MultipleChildComponent } from './multiple-child/multiple-child.component';
 
 @ Component({
   selector: 'app-root',
@@ -30,6 +31,9 @@ export class AppComponent implements AfterViewInit, OnInit {
   @ ViewChild(ChildComponentComponent, {static: false })
   childComponent : ChildComponentComponent;
 
+  @ ViewChildren(MultipleChildComponent, {read: false})
+  multipleChildComponent: QueryList< MultipleChildComponent >;
+
   ngOnInit(): void {
     console.log("NgOnInit : " + this.extraCreature);
     this.inputElement2.nativeElement.innerText = "Changed!!!";
@@ -40,6 +44,9 @@ export class AppComponent implements AfterViewInit, OnInit {
     this.inputElement.nativeElement.innerText = "Changed!!!";
     this.inputElement2.nativeElement.innerText = "Changed!!!";
     console.log("AfterViewInit : " + this.extraCreature);
+    this.multipleChildComponent.forEach((child, index) => {
+      console.log(child.getRandon());
+    })
     this.childComponent.updateChildComponent();
   }
   title = 'ViewChildPractice';

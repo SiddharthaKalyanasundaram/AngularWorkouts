@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharkDirective } from './shark.directive';
 import { ChildComponentComponent } from './child-component/child-component.component';
+import { MultipleChildComponent } from './multiple-child/multiple-child.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SharkDirective,
-    ChildComponentComponent
+    ChildComponentComponent,
+    MultipleChildComponent
   ],
   imports: [
     BrowserModule,
