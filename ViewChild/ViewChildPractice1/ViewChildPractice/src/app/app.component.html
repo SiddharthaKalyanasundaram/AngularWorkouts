@@ -12,3 +12,14 @@
 <app-multiple-child></app-multiple-child>
 <app-multiple-child></app-multiple-child>
 <app-multiple-child></app-multiple-child>
+
+<ng-template #templateRef>
+    <span> I m inside Template. </span>
+</ng-template>
+
+<ng-container #container></ng-container>
+
+<!-- Another Way of adding ng Template-->
+<ng-container *ngTemplateOutlet="templateRef"></ng-container>
+
+<ng-container *ngComponentOutlet="host"></ng-container>

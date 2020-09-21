@@ -6,18 +6,21 @@ import { AppComponent } from './app.component';
 import { SharkDirective } from './shark.directive';
 import { ChildComponentComponent } from './child-component/child-component.component';
 import { MultipleChildComponent } from './multiple-child/multiple-child.component';
+import { HostComponent } from './host/host.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SharkDirective,
     ChildComponentComponent,
-    MultipleChildComponent
+    MultipleChildComponent,
+    HostComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
+  entryComponents: [HostComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

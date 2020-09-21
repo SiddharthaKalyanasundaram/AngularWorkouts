@@ -1,7 +1,9 @@
-import { Component, AfterViewInit, OnInit, ViewChild, ElementRef, ChangeDetectorRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChild, ElementRef, ChangeDetectorRef, ViewChildren, QueryList,
+          TemplateRef, Injector, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
 import { SharkDirective } from './shark.directive';
 import { ChildComponentComponent } from './child-component/child-component.component';
 import { MultipleChildComponent } from './multiple-child/multiple-child.component';
+import { HostComponent } from './host/host.component';
 
 @ Component({
   selector: 'app-root',
@@ -9,11 +11,14 @@ import { MultipleChildComponent } from './multiple-child/multiple-child.componen
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterViewInit, OnInit {
-  constructor (private cd: ChangeDetectorRef) {
-
-  }
+  constructor (private cd: ChangeDetectorRef,
+               private injector: Injector,
+               private r: ComponentFactoryResolver) {
+ }
   extraCreature: string = "not updated";
   ToViewSpan: boolean = false ;
+  host: typeof HostComponent = HostComponent;
+  compoenent: ComponentRef< HostComponent> = null;
   @ ViewChild(SharkDirective, { static: false })
   set appShark(directive: SharkDirective) {
     this.extraCreature = directive.creature;
@@ -31,8 +36,14 @@ export class AppComponent implements AfterViewInit, OnInit {
   @ ViewChild(ChildComponentComponent, {static: false })
   childComponent : ChildComponentComponent;
 
-  @ ViewChildren(MultipleChildComponent, {read: false})
+  @ ViewChildren(MultipleChildComponent, {read: false })
   multipleChildComponent: QueryList< MultipleChildComponent >;
+
+  @ ViewChild('templateRef', {static: false } )
+  templateRef: TemplateRef < any>;
+
+  @ ViewChild('container', {read: ViewContainerRef, static: false } )
+  container: ViewContainerRef;
 
   ngOnInit(): void {
     console.log("NgOnInit : " + this.extraCreature);
@@ -48,6 +59,18 @@ export class AppComponent implements AfterViewInit, OnInit {
       console.log(child.getRandon());
     })
     this.childComponent.updateChildComponent();
+
+    this.templateRef.createEmbeddedView(null);
+    console.log(this.templateRef.elementRef.nativeElement.innerText);
+
+
+    let factory = this.r.resolveComponentFactory(HostComponent);
+    let componentRef = factory.create(this.injector);
+    let view = componentRef.hostView;
+
+    // this.container.insert(this.templateRef.createEmbeddedView(null));
+    this.container.insert(view);
+
   }
   title = 'ViewChildPractice';
 }

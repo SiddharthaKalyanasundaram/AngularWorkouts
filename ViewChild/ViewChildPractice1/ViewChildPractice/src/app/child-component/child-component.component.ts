@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-child-component',
@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChildComponentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private hostElement: ElementRef) { }
 
   ngOnInit() {
   }
